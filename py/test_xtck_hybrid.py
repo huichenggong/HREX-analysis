@@ -21,6 +21,12 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(df.iloc[1]["S3"], "0")
         self.assertEqual(df.iloc[1]["S4"], "K")
         self.assertEqual(df.iloc[1]["S5"], "W")
+
+    def test__init__(self):
+        xtck = xtck_hybrid("01-NaK2K-charge/0/k_hybrid.out", end=20000.1)
+        self.assertEqual(xtck.sim_condition_dict["wat_number"], 11134)
+        self.assertEqual(xtck.sim_condition_dict["K_number"], 160)
+        self.assertEqual(xtck.sim_condition_dict["frame_number"], 1001)
     def test_get_occupancy(self):
         xtck = xtck_hybrid("01-NaK2K-charge/0/k_test.out")
         self.assertEqual(xtck.sim_condition_dict["frame_number"], 10)
@@ -57,7 +63,7 @@ class MyTestCase(unittest.TestCase):
     def test_get_occupancy_bootstrap_frame(self):
         xtck = xtck_hybrid("01-NaK2K-charge/0/k_hybrid.out")
         res, confidence_dict = xtck.get_occupancy_bootstrap_frame()
-        print(res.confidence_interval)
+        #print(res.confidence_interval)
 
 
 

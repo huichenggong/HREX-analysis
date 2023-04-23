@@ -8,7 +8,7 @@ from scipy.stats import bootstrap
 # read xtck output
 
 class xtck_hybrid:
-    def __init__(self, hybrid_out):
+    def __init__(self, hybrid_out, start=-0.0001, end=4e7):
         self.hybrid_out = Path(hybrid_out)
         if not self.hybrid_out.is_file():
             raise IOError(str(hybrid_out) + " not exist.")
@@ -36,22 +36,22 @@ class xtck_hybrid:
                     read_flag = True
                 elif "Nr. of K ions in input" in l:
                     self.sim_condition_dict["K_number"] = int(l.split()[-1])
-
-
             else:
                 if "Nr. of K+ permeation up" in l:
                     read_flag = False
                     break
                 words = l.split()
-                state_count_dict["Time"].append(float(words[0]))
-                state = words[4]
-                state_count_dict["S0"].append(state[0])
-                state_count_dict["S1"].append(state[1])
-                state_count_dict["S2"].append(state[2])
-                state_count_dict["S3"].append(state[3])
-                state_count_dict["S4"].append(state[4])
-                state_count_dict["S5"].append(state[5])
-                frame_count += 1
+                time = float(words[0])
+                if time >= start and time <= end:
+                    state_count_dict["Time"].append(float(words[0]))
+                    state = words[4]
+                    state_count_dict["S0"].append(state[0])
+                    state_count_dict["S1"].append(state[1])
+                    state_count_dict["S2"].append(state[2])
+                    state_count_dict["S3"].append(state[3])
+                    state_count_dict["S4"].append(state[4])
+                    state_count_dict["S5"].append(state[5])
+                    frame_count += 1
         self.sim_condition_dict["frame_number"] = frame_count
         self.state_df = pd.DataFrame(state_count_dict)
 
@@ -111,4 +111,16 @@ class xtck_hybrid:
                                   ]
         return res, confidence_dict
 
+
+class HREX_result_hybrid:
+    def __init__(self, result_list):
+        self.xtck_list = []
+        for f in result_list:
+            self.xtck_list.append(xtck_hybrid(f))
+
+    def get_state_df(self):
+        state_df_list = []
+        for xtck in self.xtck_list:
+            state_df_list.append(xtck.get_state_df())
+        return state_df_list
 
