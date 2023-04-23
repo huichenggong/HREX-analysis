@@ -1,0 +1,18 @@
+assumed voltage (mV)         : 300
+discarded time (ns)          : 0
+analyzed simulation time (ns): 40
+average nr of water in filter: 0.0005
+average nr of ions in filter : 2.797
+fraction of flips            : 0.0005
+fraction of KK contacts      : 0.378
+fraction of KWKW/WKWK        : 0
+# ion permeation events      : 0
+# water permeation events    : 0
+average current (pA)         : 0
+average conductance (pS)     : 0
+average occupancy of S0 K: 0.0085   W: 0.982   0: 0.0095
+average occupancy of S1 K: 0.95   W: 0   0: 0.05
+average occupancy of S2 K: 0.5595   W: 0   0: 0.4405
+average occupancy of S3 K: 0.4845   W: 0   0: 0.5155
+average occupancy of S4 K: 0.8025   W: 0.0005   0: 0.197
+average occupancy of SC K: 0.0065   W: 0.991   0: 0.0025
